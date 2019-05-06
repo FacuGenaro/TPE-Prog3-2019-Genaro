@@ -5,15 +5,12 @@ public class Arista {
 	private boolean cabotaje;
 	private ArrayList<String> vuelos;
 	private ArrayList<Aerolinea> aerolineas;
-	private Vertice vertices[] = new Vertice[2];;
 	
-	public Arista(Integer distancia, boolean cabotaje, Vertice v1, Vertice v2) {
+	public Arista(Integer distancia, boolean cabotaje) {
 		this.vuelos = new ArrayList<>();
 		this.distancia = distancia;
 		this.cabotaje = cabotaje;
 		this.aerolineas = new ArrayList<>();
-		this.vertices[0] = v1;
-		this.vertices[1] = v2;
 	}
 
 	public ArrayList<Aerolinea> getAerolineas() {

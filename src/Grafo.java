@@ -2,6 +2,7 @@ import java.util.ArrayList;
 public class Grafo {
 	protected ArrayList<Vertice> vertices;
 	
+	//no sé como podría armarlo, estoy totalmente nublado
 	
 	public Grafo() {
 		this.vertices = new ArrayList<>();

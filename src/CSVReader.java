@@ -15,7 +15,7 @@ public class CSVReader {
 
 				String[] items = line.split(cvsSplitBy);
 
-				//acá armaría el grafo completo
+				//acá armaría el grafo completo, pero para eso necesito tener algo en la clase Grafo
 
 			}
 		} catch (IOException e) {
