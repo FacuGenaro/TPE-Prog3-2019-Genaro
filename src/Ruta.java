@@ -1,4 +1,5 @@
 //import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Ruta {
@@ -6,7 +7,8 @@ public class Ruta {
 	private boolean cabotaje;
 	private Aeropuerto origen;
 	private Aeropuerto destino;
-	//Está bien tener un map acá? hay algo más optimo? bien
+	private ArrayList<Aeropuerto> adyacencias;
+//	private ArrayList<Aerolinea> aerolineas;
 	private HashMap<String,Aerolinea> aerolineas;
 	
 	
@@ -19,6 +21,15 @@ public class Ruta {
 		this.origen = origen;
 		this.destino = destino;
 		this.aerolineas = new HashMap<>();
+		this.adyacencias = new ArrayList<>();
+	}
+	
+	public void addAdyacencia(Aeropuerto v) {
+		this.adyacencias.add(v);
+	}
+
+	public ArrayList<Aeropuerto> getAdyacencias() {
+		return new ArrayList<>(this.adyacencias);
 	}
 	
 	public void addReserva(String nombre, int reserva) {

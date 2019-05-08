@@ -13,15 +13,10 @@ public class CSVReaderReservas {
 				String[] items = line.split(cvsSplitBy);
 				for (Aeropuerto a : g.getVertices()) {
 					if (a.getNombre().equals(items[0])) {
-						for (Aeropuerto aeropuertoOrigen : a.getAdyacencias()) {
-							if (aeropuertoOrigen.getNombre().equals(items[1])) {
-								for (Ruta r : aeropuertoOrigen.getRutas()) {
-									if (r.getDestino().equals(items[1])) {
-										Integer valor = Integer.parseInt(items[3]);
-										r.addAerolinea(items[2], new Aerolinea(0,valor, items[2]));
-										//r.getAerolineas().get(items[1]).setAsientosReservados(Integer.parseInt(items[3]));
-									}
-								}
+						for (Ruta r : a.getRutas()) {
+							if (r.getDestino().equals(items[1])) {
+								Integer valor = Integer.parseInt(items[3]);
+								r.addAerolinea(items[2], new Aerolinea(0, valor, items[2]));
 							}
 						}
 					}
