@@ -1,6 +1,5 @@
 
 public class Aerolinea {
-	//Las reservas deberian ir en ruta o en aerolinea?
 	private int asientosTotales;
 	private int asientosReservados;
 	private String nombre;

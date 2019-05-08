@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 public class Grafo {
 	protected ArrayList<Aeropuerto> vertices;
-	protected ArrayList<Ruta> rutas;
+//	protected ArrayList<Ruta> rutas;
 
 	//invertir rutas en el grafo para tener un grafo no dirigido.
 	//Me gustaría hacerlo con mapa de mapa (como lo puedo hacer?)
@@ -9,7 +9,7 @@ public class Grafo {
 	
 	public Grafo() {
 		this.vertices = new ArrayList<>();
-		this.rutas = new ArrayList<>();
+//		this.rutas = new ArrayList<>();
 	}
 	
 	public ArrayList<Aeropuerto> getVertices(){
@@ -21,12 +21,5 @@ public class Grafo {
 			this.vertices.add(v);
 	}
 	
-	public ArrayList<Ruta> getRutas(){
-		return new ArrayList<Ruta>(rutas);
-	}
 	
-	public void addRuta(Ruta r) {
-		if (!this.rutas.contains(r))
-			this.rutas.add(r);
-	}
 }
