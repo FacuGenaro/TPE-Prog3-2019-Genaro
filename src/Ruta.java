@@ -7,14 +7,14 @@ public class Ruta {
 	private Aeropuerto origen;
 	private Aeropuerto destino;
 	private ArrayList<Aeropuerto> adyacencias;
-	private HashMap<String,Aerolinea> aerolineas;
-	
-	
-	public Ruta () {
+	private HashMap<String, Aerolinea> aerolineas;
+
+	public Ruta() {
 		this.origen = null;
 		this.destino = null;
 		this.aerolineas = new HashMap<>();
 	}
+
 	public Ruta(Float distancia, boolean cabotaje, Aeropuerto origen, Aeropuerto destino) {
 		this.distancia = distancia;
 		this.cabotaje = cabotaje;
@@ -23,7 +23,7 @@ public class Ruta {
 		this.aerolineas = new HashMap<>();
 		this.adyacencias = new ArrayList<>();
 	}
-	
+
 	public void addAdyacencia(Aeropuerto v) {
 		this.adyacencias.add(v);
 	}
@@ -31,17 +31,17 @@ public class Ruta {
 	public ArrayList<Aeropuerto> getAdyacencias() {
 		return new ArrayList<>(this.adyacencias);
 	}
-	
-	public void addReserva(String nombre, int reserva) {
-		this.aerolineas.get(nombre).setAsientosReservados(reserva);
-	}
+//	
+//	public void addReserva(String nombre, int reserva) {
+//		this.aerolineas.get(nombre).setAsientosReservados(reserva);
+//	}
 
-	public HashMap<String,Aerolinea> getAerolineas() {
+	public HashMap<String, Aerolinea> getAerolineas() {
 		return new HashMap<>(this.aerolineas);
 	}
 
-	public void addAerolinea(String k,Aerolinea a) {
-		this.aerolineas.put(k,a);
+	public void addAerolinea(String k, Aerolinea a) {
+		this.aerolineas.put(k, a);
 	}
 
 	public Float getDistancia() {
@@ -51,7 +51,6 @@ public class Ruta {
 	public void setDistancia(Float distancia) {
 		this.distancia = distancia;
 	}
-	
 
 	public Aeropuerto getOrigen() {
 		return origen;
@@ -76,12 +75,11 @@ public class Ruta {
 	public void setCabotaje(boolean cabotaje) {
 		this.cabotaje = cabotaje;
 	}
-	
+
 	@Override
 	public String toString() {
-		String a = ("origen: " + this.origen.getNombre() 
-				+ " destino: " + this.destino.getNombre()
-				+" distancia: " + this.distancia.toString());
+		String a = ("origen: " + this.origen.getNombre() + " destino: " + this.destino.getNombre() + " distancia: "
+				+ this.distancia.toString());
 		return a;
 	}
 

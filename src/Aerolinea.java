@@ -1,22 +1,22 @@
 
 public class Aerolinea {
-	private int asientosTotales;
+	private int asientosDisponibles;
 	private int asientosReservados;
 	private String nombre;
 
-	public Aerolinea(int asientosTotales, int asientosReservados, String nombre) {
+	public Aerolinea(int asientosDisponibles, int asientosReservados, String nombre) {
 		super();
-		this.asientosTotales = asientosTotales;
+		this.asientosDisponibles = asientosDisponibles;
 		this.asientosReservados = asientosReservados;
 		this.nombre = nombre;
 	}
 
-	public int getAsientosTotales() {
-		return asientosTotales;
+	public int getAsientosDisponibles() {
+		return asientosDisponibles;
 	}
 
-	public void setAsientosTotales(int asientosTotales) {
-		this.asientosTotales = asientosTotales;
+	public void setAsientosDisponibles(int asientosDisponibles) {
+		this.asientosDisponibles = asientosDisponibles;
 	}
 
 	public int getAsientosReservados() {
@@ -34,7 +34,7 @@ public class Aerolinea {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
 	public String toString() {
 		return (" Reservas: " + this.asientosReservados);
 	}

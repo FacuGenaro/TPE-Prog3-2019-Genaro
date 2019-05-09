@@ -54,6 +54,16 @@ public class Main {
 				r2.setDestino(origen);
 				r2.setCabotaje(cabotaje);
 				destino.addRuta(r2);
+				String[] aerolineasYAsientos = items[4].substring(1, items[4].length() - 1).split(",");
+				for (String aerolineaYAsientos : aerolineasYAsientos) {
+					String[] aya = aerolineaYAsientos.split("-");
+					Integer asientosDisponibles = Integer.valueOf(aya[1]);
+					Aerolinea a = new Aerolinea (asientosDisponibles, 0, aya[0]);
+					r.addAerolinea(a.getNombre(), a);
+					r2.addAerolinea(a.getNombre(), a);
+					// Aerolinea nueva = new Aerolinea()
+				}
+
 			}
 
 		} catch (IOException e) {
@@ -72,7 +82,10 @@ public class Main {
 						for (Ruta r : a.getRutas()) {
 							if (r.getDestino().equals(items[1])) {
 								Integer valor = Integer.parseInt(items[3]);
-								r.addAerolinea(items[2], new Aerolinea(0, valor, items[2]));
+								if (r.getAerolineas().containsKey(items[2])) {
+									r.getAerolineas().get(items[2]).setAsientosReservados(valor);
+								}
+								//setear reservas en vez de hacer est
 							}
 						}
 					}
@@ -92,11 +105,11 @@ public class Main {
 		int i = 1;
 		for (Aeropuerto a : g.getVertices()) {
 			for (Ruta r : a.getRutas()) {
-//				System.out.println("Ciclo: " + i +"- Origen: " + r.getOrigen() + ", Destino: "
-//						+ r.getDestino() + ", Distancia: " + r.getDistancia() + ", Reservados: " + r.getAerolineas());
-//				System.out.println("-----");
-//				i++;
-				System.out.println(r.getAerolineas());
+				 System.out.println("Ciclo: " + i +"- Origen: " + r.getOrigen() + ", Destino:"
+				 + r.getDestino() + ", Distancia: " + r.getDistancia() + ", Reservados: " + r.getAerolineas());
+				 System.out.println("-----");
+				 i++;
+//				System.out.println(r.getAerolineas());
 			}
 		}
 
