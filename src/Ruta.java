@@ -1,4 +1,3 @@
-//import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,11 +7,12 @@ public class Ruta {
 	private Aeropuerto origen;
 	private Aeropuerto destino;
 	private ArrayList<Aeropuerto> adyacencias;
-//	private ArrayList<Aerolinea> aerolineas;
 	private HashMap<String,Aerolinea> aerolineas;
 	
 	
 	public Ruta () {
+		this.origen = null;
+		this.destino = null;
 		this.aerolineas = new HashMap<>();
 	}
 	public Ruta(Float distancia, boolean cabotaje, Aeropuerto origen, Aeropuerto destino) {
@@ -75,6 +75,14 @@ public class Ruta {
 
 	public void setCabotaje(boolean cabotaje) {
 		this.cabotaje = cabotaje;
+	}
+	
+	@Override
+	public String toString() {
+		String a = ("origen: " + this.origen.getNombre() 
+				+ " destino: " + this.destino.getNombre()
+				+" distancia: " + this.distancia.toString());
+		return a;
 	}
 
 }

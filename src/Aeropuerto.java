@@ -55,4 +55,7 @@ public class Aeropuerto {
 		return (a.equals(this.getNombre()));
 	}
 
+	public String toString() {
+		return (this.nombre);
+	}
 }
