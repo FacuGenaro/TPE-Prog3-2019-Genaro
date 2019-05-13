@@ -38,6 +38,30 @@ public class Grafo {
 		}
 		return false;
 	}
+	
+	public void DFS() {
+//		HashMap<Aeropuerto, Boolean> visitados = new HashMap<>();
+//		for (Aeropuerto a : this.vertices) {
+//			visitados.put(a, false);
+//		}
+		for (Aeropuerto a : this.vertices) {
+			if (!a.getStatus()) {
+				System.out.println("entrando desde " + a);
+				DFS_Visitar (a);
+			}
+		}
+	}
+	
+	public void DFS_Visitar(Aeropuerto ab) {
+		ab.setStatus(true);
+		for (Ruta r : ab.getRutas()) {
+			if (!r.getDestino().getStatus()) {
+				DFS_Visitar(r.getDestino());
+				System.out.println("Visitado " + r.getDestino());
+			}
+		}
+		
+	}
 
 //	Para un par de aeropuertos de origen y destino, obtener todos los vuelos disponibles (directos o con
 //			escalas) que se pueden tomar sin utilizar una aerolínea determinada. Para cada vuelo indicar la
@@ -51,7 +75,11 @@ public class Grafo {
 					if (r.getDestino().equals(destino)) {
 						if (!r.getAerolineas().containsKey(aerolinea)) {
 							if (!visitados.containsKey(r)) {
-								
+								for (String s : r.getAerolineas().keySet()) {
+									System.out.println("Origen: " + a.getNombre() + ", destino: " + r.getDestino()
+											+ ", aerolinea: " + r.getAerolineas().get(s).getNombre());
+									visitados.put(r, true);
+								}
 							}
 						}
 					}
