@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
 	private static final String cvsSplitBy = ";";
@@ -58,7 +59,7 @@ public class Main {
 				for (String aerolineaYAsientos : aerolineasYAsientos) {
 					String[] aya = aerolineaYAsientos.split("-");
 					Integer asientosDisponibles = Integer.valueOf(aya[1]);
-					Aerolinea a = new Aerolinea (asientosDisponibles, 0, aya[0]);
+					Aerolinea a = new Aerolinea(asientosDisponibles, 0, aya[0]);
 					r.addAerolinea(a.getNombre(), a);
 					r2.addAerolinea(a.getNombre(), a);
 					// Aerolinea nueva = new Aerolinea()
@@ -85,7 +86,7 @@ public class Main {
 								if (r.getAerolineas().containsKey(items[2])) {
 									r.getAerolineas().get(items[2]).setAsientosReservados(valor);
 								}
-								//setear reservas en vez de hacer est
+								// setear reservas en vez de hacer est
 							}
 						}
 					}
@@ -96,24 +97,85 @@ public class Main {
 		}
 	}
 
+	public static Integer pedirNumero() {
+		Integer num = null;
+		try {
+			BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("Ingrese la opcion deseada");
+			num = new Integer(entrada.readLine());
+
+		} catch (Exception exc) {
+			System.out.println(exc);
+		}
+		return num;
+
+	}
+
+	public static void mostrarMenu() {
+		System.out.println("1. Servicio 1: Verificar vuelos directos");
+		System.out.println("2. Servicio 2: Obtener vuelos sin aerolinea");
+		System.out.println("3. Servicio 3: Vuelos disponibles");
+	}
+
 	public static void main(String[] args) {
 		Grafo g = new Grafo();
 		parseCSVAeropuertos(g, "C:\\Users\\facun\\Desktop\\TPE Genaro\\datasets\\Aeropuertos.csv");
 		parseCSVRutas(g, "C:\\Users\\facun\\Desktop\\TPE Genaro\\datasets\\Rutas.csv");
 		parseCSVReservas(g, "C:\\Users\\facun\\Desktop\\TPE Genaro\\datasets\\Reservas.csv");
-		
 
-	//	System.out.println(g.servicioUno("Humberto Delgado", "Logan", "United Airlines"));
-		g.servicioTres("ARG", "CHI");
+		mostrarMenu();
+		int opcion = (pedirNumero());
 
-//		int i = 1;
-//		for (Aeropuerto a : g.getVertices()) {
-//			for (Ruta r : a.getRutas()) {
-//				 System.out.println("Ciclo: " + i +" "+ r + r.getAerolineas());
-//				 System.out.println("-----");
-//				 i++;
-//			}
-//		}
+		switch (opcion) {
+		case 1: {
+			String origen = null;
+			String destino = null;
+			String aerolinea = null;
+			try {
+				BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+				System.out.println("Ingrese su aeropuerto de origen");
+				origen = new String(entrada.readLine());
+				System.out.println("Ingrese su aeropuerto de destino");
+				destino = new String(entrada.readLine());
+				System.out.println("Ingrese la aerolinea en la que desea viajar");
+				aerolinea = new String(entrada.readLine());
+			} catch (Exception exc) {
+				System.out.println(exc);
+			}
 
+			g.servicioUno(origen, destino, aerolinea);
+		}
+		case 2: {
+			System.out.println("Working on it");
+			break;
+
+		}
+		case 3: {
+			String paisOrigen = null;
+			String paisDestino = null;
+			try {
+				BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+				System.out.println("Ingrese su pais de origen");
+				paisOrigen = new String(entrada.readLine());
+				System.out.println("Ingrese su pais de destino");
+				paisDestino = new String(entrada.readLine());
+			} catch (Exception exc) {
+				System.out.println(exc);
+			}
+
+			g.servicioTres(paisOrigen, paisDestino);
+		}
+		}
 	}
+//		g.servicioTres("ARG", "USA");
+
+	// int i = 1;
+	// for (Aeropuerto a : g.getVertices()) {
+	// for (Ruta r : a.getRutas()) {
+	// System.out.println("Ciclo: " + i +" "+ r + r.getAerolineas());
+	// System.out.println("-----");
+	// i++;
+	// }
+	// }
+
 }

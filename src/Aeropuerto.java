@@ -5,23 +5,18 @@ public class Aeropuerto {
 	private String ciudad;
 	private String pais;
 	private ArrayList<Ruta> rutas;
-	//agregar rutas acá, meter aeropuertos adyacentes en las rutas
 
-	//info de aeropuerto e info de rutas que salen de ahí
-	
 	public Aeropuerto(String nombre, String ciudad, String pais) {
 		this.nombre = nombre;
 		this.ciudad = ciudad;
 		this.pais = pais;
-//		this.adyacencias = new ArrayList<>();
-//		this.aerolineas = new ArrayList<>();
 		this.rutas = new ArrayList<>();
 	}
-	
-	public ArrayList<Ruta> getRutas(){
+
+	public ArrayList<Ruta> getRutas() {
 		return new ArrayList<Ruta>(rutas);
 	}
-	
+
 	public void addRuta(Ruta r) {
 		if (!this.rutas.contains(r))
 			this.rutas.add(r);
@@ -42,15 +37,15 @@ public class Aeropuerto {
 	public void setUbicacion(String ciudad) {
 		this.ciudad = ciudad;
 	}
-	
+
 	public String getPais() {
 		return this.pais;
 	}
-	
+
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
-	
+
 	public boolean equals(String a) {
 		return (a.equals(this.getNombre()));
 	}

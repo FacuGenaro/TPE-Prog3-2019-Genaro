@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Grafo {
 	protected ArrayList<Aeropuerto> vertices;
@@ -38,21 +39,23 @@ public class Grafo {
 		return false;
 	}
 
-	public void recorrerGrafo() {
-		// Hacer un mapa de ruta/boolean para marcar los recorridos
-	}
-
 //	Para un par de aeropuertos de origen y destino, obtener todos los vuelos disponibles (directos o con
 //			escalas) que se pueden tomar sin utilizar una aerolínea determinada. Para cada vuelo indicar la
 //			aerolínea que se puede tomar, el número de escalas a realizar y la cantidad total de kilómetros a
 //			recorrer.
 	public void servicioDos(String origen, String destino, String aerolinea) {
+		HashMap<Ruta, Boolean> visitados = new HashMap<>();
 		for (Aeropuerto a : this.vertices) {
-			if (a.getNombre().equals(origen)) {
+			if (a.equals(origen)) {
 				for (Ruta r : a.getRutas()) {
-					if (r.getDestino().equals(destino) && !r.getAerolineas().containsKey(aerolinea)) {
-
+					if (r.getDestino().equals(destino)) {
+						if (!r.getAerolineas().containsKey(aerolinea)) {
+							if (!visitados.containsKey(r)) {
+								
+							}
+						}
 					}
+
 				}
 			}
 		}
@@ -62,7 +65,6 @@ public class Grafo {
 //	reservados todos los asientos. Para cada vuelo se deberá indicar los aeropuertos de origen y de destino,
 //	las aerolíneas con pasajes disponibles y la distancia en kilómetros.
 	public void servicioTres(String paisOrigen, String paisDestino) {
-		// ArrayList<Aeropuerto> aDevolver = new ArrayList<>();
 		for (Aeropuerto a : this.vertices) {
 			if (a.getPais().equals(paisOrigen)) {
 				for (Ruta r : a.getRutas()) {
@@ -70,7 +72,8 @@ public class Grafo {
 						for (String s : r.getAerolineas().keySet()) {
 							if (r.getAerolineas().get(s).isDisponible()) {
 								System.out.println("Vuelo disponible en la aerolinea " + s + " donde el origen es: "
-										+ a.getNombre() + " y el destino es: " + r.getDestino());
+										+ a.getNombre() + "-" + a.getPais() + " y el destino es: " + r.getDestino()
+										+ "-" + r.getDestino().getPais());
 							}
 						}
 					}
