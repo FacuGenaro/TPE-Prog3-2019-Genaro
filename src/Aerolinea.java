@@ -10,7 +10,11 @@ public class Aerolinea {
 		this.asientosReservados = asientosReservados;
 		this.nombre = nombre;
 	}
-
+	
+	public boolean isDisponible() {
+		return (this.asientosDisponibles > this.asientosReservados);
+	}
+	
 	public int getAsientosDisponibles() {
 		return asientosDisponibles;
 	}

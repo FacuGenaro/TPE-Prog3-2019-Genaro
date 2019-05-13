@@ -101,17 +101,19 @@ public class Main {
 		parseCSVAeropuertos(g, "C:\\Users\\facun\\Desktop\\TPE Genaro\\datasets\\Aeropuertos.csv");
 		parseCSVRutas(g, "C:\\Users\\facun\\Desktop\\TPE Genaro\\datasets\\Rutas.csv");
 		parseCSVReservas(g, "C:\\Users\\facun\\Desktop\\TPE Genaro\\datasets\\Reservas.csv");
+		
 
-		int i = 1;
-		for (Aeropuerto a : g.getVertices()) {
-			for (Ruta r : a.getRutas()) {
-				 System.out.println("Ciclo: " + i +"- Origen: " + r.getOrigen() + ", Destino:"
-				 + r.getDestino() + ", Distancia: " + r.getDistancia() + ", Reservados: " + r.getAerolineas());
-				 System.out.println("-----");
-				 i++;
-//				System.out.println(r.getAerolineas());
-			}
-		}
+	//	System.out.println(g.servicioUno("Humberto Delgado", "Logan", "United Airlines"));
+		g.servicioTres("ARG", "CHI");
+
+//		int i = 1;
+//		for (Aeropuerto a : g.getVertices()) {
+//			for (Ruta r : a.getRutas()) {
+//				 System.out.println("Ciclo: " + i +" "+ r + r.getAerolineas());
+//				 System.out.println("-----");
+//				 i++;
+//			}
+//		}
 
 	}
 }
