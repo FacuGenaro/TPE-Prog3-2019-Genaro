@@ -12,7 +12,7 @@ public class Aerolinea {
 	}
 	
 	public boolean isDisponible() {
-		return (this.asientosDisponibles > this.asientosReservados);
+		return (this.asientosDisponibles >= this.asientosReservados);
 	}
 	
 	public int getAsientosDisponibles() {
@@ -40,7 +40,7 @@ public class Aerolinea {
 	}
 
 	public String toString() {
-		return (" Nombre: " + this.nombre +" Reservas: " + this.asientosReservados);
+		return (this.nombre);
 	}
 
 }

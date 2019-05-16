@@ -28,7 +28,7 @@ public class Grafo {
 				for (Ruta r : a.getRutas()) {
 					if (r.getDestino().equals(destino)) {
 						if (r.getAerolineas().containsKey(aerolinea)) {
-							System.out.println("La distancia es: " + r.getDistancia() + " y hay "
+							System.out.println("Existe un vuelo directo, la distancia es: " + r.getDistancia() + " y hay "
 									+ r.getAerolineas().get(aerolinea).getAsientosDisponibles()
 									+ " asientos disponibles");
 							return true;
@@ -46,25 +46,49 @@ public class Grafo {
 //	aerolínea que se puede tomar, el número de escalas a realizar y la cantidad total de kilómetros a
 //	recorrer.
 
-	public void DFS(String origen, String destino) {
+	public void servicioDos(String origen, String destino) {
 		HashMap<Aeropuerto, Boolean> visitados = new HashMap<>();
+		int cantCaminos = 0;
+		Float distanciaRecorrida = (float) 0;
 		for (Aeropuerto a : this.vertices) {
 			if (a.getNombre().equals(origen)) {
-				System.out.println("entrando desde " + a);
 				List<List<Ruta>> rutas = DFS_Visitar(a, visitados, destino, new ArrayList<List<Ruta>>());
-				System.out.println(rutas);
+				for (List<Ruta> listaRutas : rutas) {
+					cantCaminos++;
+					int cantEscalas = 0;
+					System.out.println("Camino n° " + cantCaminos + " para ir desde " + origen + " hasta " + destino);
+					System.out.println("-.-.-.-.-.-.-.-.-.-.-.-.-");
+					for (Ruta r : listaRutas) {
+						// Escala 0 = origen
+						System.out.println("Escala n°" + cantEscalas + " en " + r.getOrigen() + " que parte hacia " + r.getDestino());
+						List<Aerolinea> aerolineasDisponibles = new ArrayList<>();
+						for (String ae : r.getAerolineas().keySet()) {
+							if (r.getAerolineas().get(ae).isDisponible()) {
+								aerolineasDisponibles.add(r.getAerolineas().get(ae));
+							}
+						}
+						System.out.println("Las aerolineas disponibles son las siguientes");
+						System.out.println(aerolineasDisponibles);
+						System.out.println();
+						cantEscalas++;
+						distanciaRecorrida = distanciaRecorrida + r.getDistancia();
+					}
+					System.out.println("La distancia para esta ruta fue: " + distanciaRecorrida + " Kilometros y hubo " + (cantEscalas-1) + " escalas");
+					distanciaRecorrida = (float) 0;
+					System.out.println("-.-.-.-.-.-.-.-.-.-.-.-.-");
+				}
 			}
 		}
 	}
 
-	public List<List<Ruta>> DFS_Visitar(Aeropuerto ab, Map<Aeropuerto, Boolean> visitados, String destino,
+	private List<List<Ruta>> DFS_Visitar(Aeropuerto ab, Map<Aeropuerto, Boolean> visitados, String destino,
 			List<List<Ruta>> rutas) {
 		List<Ruta> rutasActuales = new ArrayList<Ruta>();
 		DFS_Visitar(ab, visitados, destino, rutas, rutasActuales);
 		return rutas;
 	}
 
-	public void DFS_Visitar(Aeropuerto ab, Map<Aeropuerto, Boolean> visitados, String destino, List<List<Ruta>> rutas,
+	private void DFS_Visitar(Aeropuerto ab, Map<Aeropuerto, Boolean> visitados, String destino, List<List<Ruta>> rutas,
 			List<Ruta> rutasActuales) {
 		if (ab.getNombre().equals(destino)) {
 			rutas.add(new ArrayList<Ruta>(rutasActuales));
@@ -76,7 +100,6 @@ public class Grafo {
 				rutasActuales.add(r);
 				DFS_Visitar(r.getDestino(), visitados, destino, rutas, rutasActuales);
 				rutasActuales.remove(r);
-				System.out.println("Visitado " + r.getDestino());
 			}
 		}
 	}
