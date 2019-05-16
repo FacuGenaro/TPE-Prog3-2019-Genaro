@@ -149,7 +149,7 @@ public class Main {
 			}
 
 			if (!g.servicioUno(origen, destino, aerolinea)) {
-				System.out.println("No existe un vuelo directo");
+				System.out.println("No existe un vuelo directo o la aerolinea no está disponible");
 			}
 			break;
 		}

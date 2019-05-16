@@ -28,8 +28,9 @@ public class Grafo {
 		}
 	}
 
-	// Dados un origen y un destino verificar si existe un vuelo directo con una
-	// aerolinea en particular
+//	Verificar si existe un vuelo directo (es decir, sin escalas) entre un aeropuerto de origen y uno de
+//	destino, para una aerolínea particular. De existir, se desea conocer los kilómetros que requiere el viaje
+//	y la cantidad de asientos que se encuentran disponibles (es decir, no están reservados).
 	public boolean servicioUno(String origen, String destino, String aerolinea) {
 		for (Aeropuerto a : this.vertices) {
 			if (a.getNombre().equals(origen)) {
