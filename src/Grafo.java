@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Grafo {
 	protected ArrayList<Aeropuerto> vertices;
@@ -38,53 +40,43 @@ public class Grafo {
 		}
 		return false;
 	}
-	
-	public void DFS() {
-//		HashMap<Aeropuerto, Boolean> visitados = new HashMap<>();
-//		for (Aeropuerto a : this.vertices) {
-//			visitados.put(a, false);
-//		}
-		for (Aeropuerto a : this.vertices) {
-			if (!a.getStatus()) {
-				System.out.println("entrando desde " + a);
-				DFS_Visitar (a);
-			}
-		}
-	}
-	
-	public void DFS_Visitar(Aeropuerto ab) {
-		ab.setStatus(true);
-		for (Ruta r : ab.getRutas()) {
-			if (!r.getDestino().getStatus()) {
-				DFS_Visitar(r.getDestino());
-				System.out.println("Visitado " + r.getDestino());
-			}
-		}
-		
-	}
 
 //	Para un par de aeropuertos de origen y destino, obtener todos los vuelos disponibles (directos o con
-//			escalas) que se pueden tomar sin utilizar una aerolínea determinada. Para cada vuelo indicar la
-//			aerolínea que se puede tomar, el número de escalas a realizar y la cantidad total de kilómetros a
-//			recorrer.
-	public void servicioDos(String origen, String destino, String aerolinea) {
-		HashMap<Ruta, Boolean> visitados = new HashMap<>();
-		for (Aeropuerto a : this.vertices) {
-			if (a.equals(origen)) {
-				for (Ruta r : a.getRutas()) {
-					if (r.getDestino().equals(destino)) {
-						if (!r.getAerolineas().containsKey(aerolinea)) {
-							if (!visitados.containsKey(r)) {
-								for (String s : r.getAerolineas().keySet()) {
-									System.out.println("Origen: " + a.getNombre() + ", destino: " + r.getDestino()
-											+ ", aerolinea: " + r.getAerolineas().get(s).getNombre());
-									visitados.put(r, true);
-								}
-							}
-						}
-					}
+//	escalas) que se pueden tomar sin utilizar una aerolínea determinada. Para cada vuelo indicar la
+//	aerolínea que se puede tomar, el número de escalas a realizar y la cantidad total de kilómetros a
+//	recorrer.
 
-				}
+	public void DFS(String origen, String destino) {
+		HashMap<Aeropuerto, Boolean> visitados = new HashMap<>();
+		for (Aeropuerto a : this.vertices) {
+			if (a.getNombre().equals(origen)) {
+				System.out.println("entrando desde " + a);
+				List<List<Ruta>> rutas = DFS_Visitar(a, visitados, destino, new ArrayList<List<Ruta>>());
+				System.out.println(rutas);
+			}
+		}
+	}
+
+	public List<List<Ruta>> DFS_Visitar(Aeropuerto ab, Map<Aeropuerto, Boolean> visitados, String destino,
+			List<List<Ruta>> rutas) {
+		List<Ruta> rutasActuales = new ArrayList<Ruta>();
+		DFS_Visitar(ab, visitados, destino, rutas, rutasActuales);
+		return rutas;
+	}
+
+	public void DFS_Visitar(Aeropuerto ab, Map<Aeropuerto, Boolean> visitados, String destino, List<List<Ruta>> rutas,
+			List<Ruta> rutasActuales) {
+		if (ab.getNombre().equals(destino)) {
+			rutas.add(new ArrayList<Ruta>(rutasActuales));
+			return;
+		}
+		if (!visitados.containsKey(ab)) {
+			visitados.put(ab, true);
+			for (Ruta r : ab.getRutas()) {
+				rutasActuales.add(r);
+				DFS_Visitar(r.getDestino(), visitados, destino, rutas, rutasActuales);
+				rutasActuales.remove(r);
+				System.out.println("Visitado " + r.getDestino());
 			}
 		}
 	}

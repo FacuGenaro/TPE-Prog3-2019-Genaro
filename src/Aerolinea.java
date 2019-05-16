@@ -40,7 +40,7 @@ public class Aerolinea {
 	}
 
 	public String toString() {
-		return (" Reservas: " + this.asientosReservados);
+		return (" Nombre: " + this.nombre +" Reservas: " + this.asientosReservados);
 	}
 
 }

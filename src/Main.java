@@ -169,7 +169,7 @@ public class Main {
 //		}
 		
 		//g.servicioDos("Pucon" , "Ministro Pistarini", "Delta");
-		g.DFS();
+		g.DFS("Tocumen", "Pucon");
 	}
 
 }
