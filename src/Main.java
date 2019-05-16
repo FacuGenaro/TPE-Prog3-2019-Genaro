@@ -107,9 +107,11 @@ public class Main {
 	}
 
 	public static void mostrarMenu() {
-		System.out.println("1. Servicio 1: Verificar vuelos directos");
-		System.out.println("2. Servicio 2: Obtener todos los vuelos sin especificar aerolinea");
-		System.out.println("3. Servicio 3: Vuelos disponibles de un pais a otro");
+		System.out.println("1. Listar todos los aeropuertos");
+		System.out.println("2. Listar todas las reservas realizadas");
+		System.out.println("3. Servicio 1: Verificar vuelos directos");
+		System.out.println("4. Servicio 2: Obtener todos los vuelos sin especificar aerolinea");
+		System.out.println("5. Servicio 3: Vuelos disponibles de un pais a otro");
 	}
 
 	public static void main(String[] args) {
@@ -123,6 +125,14 @@ public class Main {
 
 		switch (opcion) {
 		case 1: {
+			System.out.println(g.getVertices());
+			break;
+		}
+		case 2:{
+			g.listarReservas();
+			break;
+		}
+		case 3: {
 			String origen = null;
 			String destino = null;
 			String aerolinea = null;
@@ -137,13 +147,13 @@ public class Main {
 			} catch (Exception exc) {
 				System.out.println(exc);
 			}
-			
+
 			if (!g.servicioUno(origen, destino, aerolinea)) {
 				System.out.println("No existe un vuelo directo");
 			}
 			break;
 		}
-		case 2: {
+		case 4: {
 			String origen = null;
 			String destino = null;
 			try {
@@ -160,7 +170,7 @@ public class Main {
 			break;
 
 		}
-		case 3: {
+		case 5: {
 			String paisOrigen = null;
 			String paisDestino = null;
 			try {

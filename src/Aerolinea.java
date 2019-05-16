@@ -39,8 +39,12 @@ public class Aerolinea {
 		this.nombre = nombre;
 	}
 
+	public String listaReservasToString() {
+		return String.valueOf(this.asientosReservados);
+	}
+	
 	public String toString() {
-		return (this.nombre);
+		return (this.nombre + " " + this.asientosReservados);
 	}
 
 }

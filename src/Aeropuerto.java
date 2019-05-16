@@ -4,7 +4,6 @@ public class Aeropuerto {
 	private String nombre;
 	private String ciudad;
 	private String pais;
-	private Boolean visitado = false;
 	private ArrayList<Ruta> rutas;
 
 	public Aeropuerto(String nombre, String ciudad, String pais) {
@@ -12,14 +11,6 @@ public class Aeropuerto {
 		this.ciudad = ciudad;
 		this.pais = pais;
 		this.rutas = new ArrayList<>();
-	}
-	
-	public void setStatus(Boolean e) {
-		this.visitado = e;
-	}
-	
-	public Boolean getStatus() {
-		return this.visitado;
 	}
 
 	public ArrayList<Ruta> getRutas() {

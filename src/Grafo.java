@@ -19,6 +19,14 @@ public class Grafo {
 		if (!this.vertices.contains(v))
 			this.vertices.add(v);
 	}
+	
+	public void listarReservas() {
+		for (Aeropuerto a : this.vertices) {
+			for (Ruta r : a.getRutas()) {
+				System.out.println("Para el vuelo desde " + r.getOrigen() + " hasta " + r.getDestino() + " Se hicieron las siguientes reservas " + r.getAerolineas());
+			}
+		}
+	}
 
 	// Dados un origen y un destino verificar si existe un vuelo directo con una
 	// aerolinea en particular
