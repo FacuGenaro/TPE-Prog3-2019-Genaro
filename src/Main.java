@@ -1,7 +1,12 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 	private static final String cvsSplitBy = ";";
@@ -92,6 +97,33 @@ public class Main {
 		}
 	}
 
+	public static void CSVWrite(ArrayList<String> salida) {
+		BufferedWriter bw = null;
+		try {
+			File file1 = new File("C:\\Users\\facun\\Desktop\\TPE-Prog3-2019-Genaro\\datagets\\salida.csv");
+			if (!file1.exists()) {
+				file1.createNewFile();
+			}
+			FileWriter fw = new FileWriter(file1);
+			bw = new BufferedWriter(fw);
+			for (int i = 0; i < salida.size(); i++) {
+				String contenidoLinea1 = salida.get(i);
+				bw.write(contenidoLinea1);
+				bw.newLine();
+			}
+
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} finally {
+			try {
+				if (bw != null)
+					bw.close();
+			} catch (Exception ex) {
+				System.out.println("Error cerrando el BufferedWriter" + ex);
+			}
+		}
+	}
+
 	public static Integer pedirNumero() {
 		Integer num = null;
 		try {
@@ -116,9 +148,11 @@ public class Main {
 
 	public static void main(String[] args) {
 		Grafo g = new Grafo();
-		parseCSVAeropuertos(g, "D:\\Desktop\\TPE Prog 3\\TPE-Prog3-2019-Genaro\\datasets\\Aeropuertos.csv");
-		parseCSVRutas(g, "D:\\Desktop\\TPE Prog 3\\TPE-Prog3-2019-Genaro\\datasets\\Rutas.csv");
-		parseCSVReservas(g, "D:\\Desktop\\TPE Prog 3\\TPE-Prog3-2019-Genaro\\datasets\\Reservas.csv");
+		ArrayList<String> salida = new ArrayList<>();
+
+		parseCSVAeropuertos(g, "C:\\Users\\facun\\Desktop\\TPE-Prog3-2019-Genaro\\datasets\\Aeropuertos.csv");
+		parseCSVRutas(g, "C:\\Users\\facun\\Desktop\\TPE-Prog3-2019-Genaro\\datasets\\Rutas.csv");
+		parseCSVReservas(g, "C:\\Users\\facun\\Desktop\\TPE-Prog3-2019-Genaro\\datasets\\Reservas.csv");
 
 		mostrarMenu();
 		int opcion = (pedirNumero());
@@ -128,11 +162,23 @@ public class Main {
 			System.out.println(g.getVertices());
 			break;
 		}
-		case 2:{
-			g.listarReservas();
+		case 2: {
+			salida.clear();
+			for (Ruta r : g.listarReservas()) {
+				for (String a : r.getAerolineas().keySet()) {
+					if (r.getAerolineas().get(a).getAsientosReservados() > 0) {
+						String datosSalida = new String("Desde " + r.getOrigen() + " hasta " + r.getDestino() + " hay "
+								+ r.getAerolineas().get(a).getAsientosReservados() + " asientos reservados");
+						salida.add(datosSalida);
+						System.out.println(datosSalida);
+					}
+				}
+			}
+			CSVWrite(salida);
 			break;
 		}
 		case 3: {
+			salida.clear();
 			String origen = null;
 			String destino = null;
 			String aerolinea = null;
@@ -148,29 +194,52 @@ public class Main {
 				System.out.println(exc);
 			}
 
-			if (!g.servicioUno(origen, destino, aerolinea)) {
-				System.out.println("No existe un vuelo directo o la aerolinea no está disponible");
+			for (String s : g.servicioUno(origen, destino, aerolinea)) {
+				salida.add(s);
 			}
+			System.out.println(salida);
+			CSVWrite(salida);
 			break;
 		}
 		case 4: {
+			int contadorEscalas = 0;
+			Float distanciaTotal = (float) 0.0;
 			String origen = null;
 			String destino = null;
+			String aerolinea = null;
 			try {
 				BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
 				System.out.println("Ingrese su aeropuerto de origen");
 				origen = new String(entrada.readLine());
 				System.out.println("Ingrese su aeropuerto de destino");
 				destino = new String(entrada.readLine());
+				System.out.println("Ingrese la aerolinea que quiere evitar");
+				aerolinea = new String(entrada.readLine());
 			} catch (Exception exc) {
 				System.out.println(exc);
 			}
 
-			g.servicioDos(origen, destino);
+			ArrayList<String> rutas = new ArrayList<String>();
+			for (List<Ruta> listaRutas : g.servicioDos(origen, destino, aerolinea)) {
+				for (Ruta r : listaRutas) {
+					distanciaTotal = distanciaTotal + r.getDistancia();
+					contadorEscalas++;
+					rutas.add("Origen " + r.getOrigen() + " destino " + r.getDestino() + " aerolineas "
+							+ r.getAerolineas());
+				}
+				rutas.add("Distancia total de la ruta: " + distanciaTotal + " Cantidad de escalas: " + contadorEscalas);
+				contadorEscalas = 0;
+				distanciaTotal = (float) 0.0;
+			}
+			for (String s : rutas) {
+				System.out.println(s);
+			}
+			CSVWrite(rutas);
 			break;
 
 		}
 		case 5: {
+			salida.clear();
 			String paisOrigen = null;
 			String paisDestino = null;
 			try {
@@ -182,8 +251,11 @@ public class Main {
 			} catch (Exception exc) {
 				System.out.println(exc);
 			}
-
-			g.servicioTres(paisOrigen, paisDestino);
+			for (String s : g.servicioTres(paisOrigen, paisDestino)) {
+				salida.add(s);
+			}
+			System.out.println(salida);
+			CSVWrite(salida);
 		}
 		}
 	}

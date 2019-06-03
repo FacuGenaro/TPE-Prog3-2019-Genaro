@@ -19,35 +19,37 @@ public class Grafo {
 		if (!this.vertices.contains(v))
 			this.vertices.add(v);
 	}
-	
-	public void listarReservas() {
+
+	public List<Ruta> listarReservas() {
+		ArrayList<Ruta> aDevolver = new ArrayList<>();
 		for (Aeropuerto a : this.vertices) {
 			for (Ruta r : a.getRutas()) {
-				System.out.println("Para el vuelo desde " + r.getOrigen() + " hasta " + r.getDestino() + " Se hicieron las siguientes reservas " + r.getAerolineas());
+				aDevolver.add(r);
 			}
 		}
+		return aDevolver;
 	}
 
 //	Verificar si existe un vuelo directo (es decir, sin escalas) entre un aeropuerto de origen y uno de
 //	destino, para una aerolínea particular. De existir, se desea conocer los kilómetros que requiere el viaje
 //	y la cantidad de asientos que se encuentran disponibles (es decir, no están reservados).
-	public boolean servicioUno(String origen, String destino, String aerolinea) {
+	public ArrayList<String> servicioUno(String origen, String destino, String aerolinea) {
+		ArrayList<String> aDevolver = new ArrayList<>();
 		for (Aeropuerto a : this.vertices) {
 			if (a.getNombre().equals(origen)) {
 				for (Ruta r : a.getRutas()) {
 					if (r.getDestino().equals(destino)) {
 						if (r.getAerolineas().containsKey(aerolinea)) {
-							System.out.println("Existe un vuelo directo, la distancia es: " + r.getDistancia() + " y hay "
+							aDevolver.add("Para ir desde " + origen + " hasta " + destino
+									+ " existe un vuelo directo, la distancia es: " + r.getDistancia() + " y hay "
 									+ r.getAerolineas().get(aerolinea).getAsientosDisponibles()
 									+ " asientos disponibles");
-							return true;
 						}
-						return false;
 					}
 				}
 			}
 		}
-		return false;
+		return aDevolver;
 	}
 
 //	Para un par de aeropuertos de origen y destino, obtener todos los vuelos disponibles (directos o con
@@ -55,50 +57,26 @@ public class Grafo {
 //	aerolínea que se puede tomar, el número de escalas a realizar y la cantidad total de kilómetros a
 //	recorrer.
 
-	public void servicioDos(String origen, String destino) {
+	public List<List<Ruta>> servicioDos(String origen, String destino, String aerolinea) {
 		HashMap<Aeropuerto, Boolean> visitados = new HashMap<>();
-		int cantCaminos = 0;
-		Float distanciaRecorrida = (float) 0;
+		List<List<Ruta>> rutas = new ArrayList<>();
 		for (Aeropuerto a : this.vertices) {
 			if (a.getNombre().equals(origen)) {
-				List<List<Ruta>> rutas = DFS_Visitar(a, visitados, destino, new ArrayList<List<Ruta>>());
-				for (List<Ruta> listaRutas : rutas) {
-					cantCaminos++;
-					int cantEscalas = 0;
-					System.out.println("Camino n° " + cantCaminos + " para ir desde " + origen + " hasta " + destino);
-					System.out.println("-.-.-.-.-.-.-.-.-.-.-.-.-");
-					for (Ruta r : listaRutas) {
-						// Escala 0 = origen
-						System.out.println("Escala n°" + cantEscalas + " en " + r.getOrigen() + " que parte hacia " + r.getDestino());
-						List<Aerolinea> aerolineasDisponibles = new ArrayList<>();
-						for (String ae : r.getAerolineas().keySet()) {
-							if (r.getAerolineas().get(ae).isDisponible()) {
-								aerolineasDisponibles.add(r.getAerolineas().get(ae));
-							}
-						}
-						System.out.println("Las aerolineas disponibles son las siguientes");
-						System.out.println(aerolineasDisponibles);
-						System.out.println();
-						cantEscalas++;
-						distanciaRecorrida = distanciaRecorrida + r.getDistancia();
-					}
-					System.out.println("La distancia para esta ruta fue: " + distanciaRecorrida + " Kilometros y hubo " + (cantEscalas-1) + " escalas");
-					distanciaRecorrida = (float) 0;
-					System.out.println("-.-.-.-.-.-.-.-.-.-.-.-.-");
-				}
+				rutas = DFS_Visitar(a, visitados, destino, new ArrayList<List<Ruta>>(), aerolinea);
 			}
 		}
+		return rutas;
 	}
 
 	private List<List<Ruta>> DFS_Visitar(Aeropuerto ab, Map<Aeropuerto, Boolean> visitados, String destino,
-			List<List<Ruta>> rutas) {
+			List<List<Ruta>> rutas, String aerolinea) {
 		List<Ruta> rutasActuales = new ArrayList<Ruta>();
-		DFS_Visitar(ab, visitados, destino, rutas, rutasActuales);
+		DFS_Visitar(ab, visitados, destino, rutas, rutasActuales, aerolinea);
 		return rutas;
 	}
 
 	private void DFS_Visitar(Aeropuerto ab, Map<Aeropuerto, Boolean> visitados, String destino, List<List<Ruta>> rutas,
-			List<Ruta> rutasActuales) {
+			List<Ruta> rutasActuales, String aerolinea) {
 		if (ab.getNombre().equals(destino)) {
 			rutas.add(new ArrayList<Ruta>(rutasActuales));
 			return;
@@ -106,9 +84,23 @@ public class Grafo {
 		if (!visitados.containsKey(ab)) {
 			visitados.put(ab, true);
 			for (Ruta r : ab.getRutas()) {
-				rutasActuales.add(r);
-				DFS_Visitar(r.getDestino(), visitados, destino, rutas, rutasActuales);
-				rutasActuales.remove(r);
+				if (r.getAerolineas().containsKey(aerolinea)) {
+					Ruta rCopia = new Ruta(r.getDistancia(),r.isCabotaje(), r.getOrigen(), r.getDestino());
+					for (String s : r.getAerolineas().keySet()) {
+						if (!s.equals(aerolinea)) {
+							rCopia.addAerolinea(s, r.getAerolineas().get(s));
+						}
+					}
+					if (!rCopia.getAerolineas().isEmpty()) {
+						rutasActuales.add(rCopia);
+						DFS_Visitar(r.getDestino(), visitados, destino, rutas, rutasActuales, aerolinea);
+						rutasActuales.remove(rCopia);
+					}
+				}else {	
+					rutasActuales.add(r);
+					DFS_Visitar(r.getDestino(), visitados, destino, rutas, rutasActuales, aerolinea);
+					rutasActuales.remove(r);
+				}
 			}
 		}
 	}
@@ -116,14 +108,15 @@ public class Grafo {
 //	Obtener todos los vuelos directos disponibles desde un país a otro, es decir, donde no se encuentren
 //	reservados todos los asientos. Para cada vuelo se deberá indicar los aeropuertos de origen y de destino,
 //	las aerolíneas con pasajes disponibles y la distancia en kilómetros.
-	public void servicioTres(String paisOrigen, String paisDestino) {
+	public ArrayList<String> servicioTres(String paisOrigen, String paisDestino) {
+		ArrayList<String> aDevolver = new ArrayList<>();
 		for (Aeropuerto a : this.vertices) {
 			if (a.getPais().equals(paisOrigen)) {
 				for (Ruta r : a.getRutas()) {
 					if (r.getDestino().getPais().equals(paisDestino)) {
 						for (String s : r.getAerolineas().keySet()) {
 							if (r.getAerolineas().get(s).isDisponible()) {
-								System.out.println("Vuelo disponible en la aerolinea " + s + " donde el origen es: "
+								aDevolver.add("Vuelo disponible en la aerolinea " + s + " donde el origen es: "
 										+ a.getNombre() + "-" + a.getPais() + " y el destino es: " + r.getDestino()
 										+ "-" + r.getDestino().getPais());
 							}
@@ -132,5 +125,6 @@ public class Grafo {
 				}
 			}
 		}
+		return aDevolver;
 	}
 }

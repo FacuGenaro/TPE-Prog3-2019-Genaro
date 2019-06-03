@@ -1,0 +1,26 @@
+Origen Pucon destino Ministro Pistarini aerolineas {United Airlines=Reservas: 0}
+Origen Ministro Pistarini destino John F. Kennedy aerolineas {United Airlines=Reservas: 20, Avianca=Reservas: 0, Aerolineas=Reservas: 0, Delta=Reservas: 152}
+Origen John F. Kennedy destino Jorge Newbery aerolineas {United Airlines=Reservas: 0, Aerolineas=Reservas: 0, Delta=Reservas: 0}
+Origen Jorge Newbery destino Francisco Gabrielli aerolineas {Aerolineas=Reservas: 0}
+Origen Francisco Gabrielli destino Comandante Espora aerolineas {Aerolineas=Reservas: 0}
+Origen Comandante Espora destino Comodoro Benitez aerolineas {Aerolineas=Reservas: 0}
+Origen Comodoro Benitez destino El prat aerolineas {United Airlines=Reservas: 0, Delta=Reservas: 80}
+Origen El prat destino Armando Tola aerolineas {United Airlines=Reservas: 0}
+Origen Armando Tola destino Logan aerolineas {United Airlines=Reservas: 0}
+Distancia total de la ruta: 44763.266 Cantidad de escalas: 9
+Origen Pucon destino Ministro Pistarini aerolineas {United Airlines=Reservas: 0}
+Origen Ministro Pistarini destino John F. Kennedy aerolineas {United Airlines=Reservas: 20, Avianca=Reservas: 0, Aerolineas=Reservas: 0, Delta=Reservas: 152}
+Origen John F. Kennedy destino Jorge Newbery aerolineas {United Airlines=Reservas: 0, Aerolineas=Reservas: 0, Delta=Reservas: 0}
+Origen Jorge Newbery destino Francisco Gabrielli aerolineas {Aerolineas=Reservas: 0}
+Origen Francisco Gabrielli destino Comandante Espora aerolineas {Aerolineas=Reservas: 0}
+Origen Comandante Espora destino Comodoro Benitez aerolineas {Aerolineas=Reservas: 0}
+Origen Comodoro Benitez destino El prat aerolineas {United Airlines=Reservas: 0, Delta=Reservas: 80}
+Origen El prat destino Armando Tola aerolineas {United Airlines=Reservas: 0}
+Origen Armando Tola destino Kingsford Smith aerolineas {Delta=Reservas: 0}
+Origen Kingsford Smith destino Humberto Delgado aerolineas {United Airlines=Reservas: 0}
+Origen Humberto Delgado destino Logan aerolineas {United Airlines=Reservas: 0, Delta=Reservas: 0}
+Distancia total de la ruta: 67512.445 Cantidad de escalas: 11
+Origen Pucon destino Ministro Pistarini aerolineas {United Airlines=Reservas: 0}
+Origen Ministro Pistarini destino John F. Kennedy aerolineas {United Airlines=Reservas: 20, Avianca=Reservas: 0, Aerolineas=Reservas: 0, Delta=Reservas: 152}
+Origen John F. Kennedy destino Logan aerolineas {United Airlines=Reservas: 0}
+Distancia total de la ruta: 10133.9 Cantidad de escalas: 3
