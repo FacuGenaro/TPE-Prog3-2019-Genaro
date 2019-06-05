@@ -61,10 +61,16 @@ public class Ruta {
 		this.cabotaje = cabotaje;
 	}
 
+//	@Override
+//	public String toString() {
+//		String a = ("origen: " + this.origen.getNombre() + " destino: " + this.destino.getNombre() + " distancia: "
+//				+ this.distancia.toString() + " " + this.getAerolineas());
+//		return a;
+//	}
+	
 	@Override
 	public String toString() {
-		String a = ("origen: " + this.origen.getNombre() + " destino: " + this.destino.getNombre() + " distancia: "
-				+ this.distancia.toString() + " " + this.getAerolineas());
+		String a = ("origen: " + this.origen.getNombre() + " destino: " + this.destino.getNombre());
 		return a;
 	}
 

@@ -150,114 +150,122 @@ public class Main {
 		Grafo g = new Grafo();
 		ArrayList<String> salida = new ArrayList<>();
 
-		parseCSVAeropuertos(g, "C:\\Users\\facun\\Desktop\\TPE-Prog3-2019-Genaro\\datasets\\Aeropuertos.csv");
-		parseCSVRutas(g, "C:\\Users\\facun\\Desktop\\TPE-Prog3-2019-Genaro\\datasets\\Rutas.csv");
+		parseCSVAeropuertos(g, "C:\\Users\\facun\\Desktop\\TPE-Prog3-2019-Genaro\\datasets\\AeropuertosSimplificado.csv");
+		parseCSVRutas(g, "C:\\Users\\facun\\Desktop\\TPE-Prog3-2019-Genaro\\datasets\\RutasSimplificado.csv");
 		parseCSVReservas(g, "C:\\Users\\facun\\Desktop\\TPE-Prog3-2019-Genaro\\datasets\\Reservas.csv");
+		
+		g.recorridoBacktracking("Ministro Pistarini");
+		System.out.println("------------");
+		g.recorridoBacktracking("Pucon");
+		System.out.println("------------");
+		g.recorridoBacktracking("Comodoro Benitez");
+		System.out.println("------------");
+		g.recorridoBacktracking("Jorge Newbery");
 
-		mostrarMenu();
-		int opcion = (pedirNumero());
-
-		switch (opcion) {
-		case 1: {
-			System.out.println(g.getVertices());
-			break;
-		}
-		case 2: {
-			salida.clear();
-			for (Ruta r : g.listarReservas()) {
-				for (String a : r.getAerolineas().keySet()) {
-					if (r.getAerolineas().get(a).getAsientosReservados() > 0) {
-						String datosSalida = new String("Desde " + r.getOrigen() + " hasta " + r.getDestino() + " hay "
-								+ r.getAerolineas().get(a).getAsientosReservados() + " asientos reservados");
-						salida.add(datosSalida);
-						System.out.println(datosSalida);
-					}
-				}
-			}
-			CSVWrite(salida);
-			break;
-		}
-		case 3: {
-			salida.clear();
-			String origen = null;
-			String destino = null;
-			String aerolinea = null;
-			try {
-				BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-				System.out.println("Ingrese su aeropuerto de origen");
-				origen = new String(entrada.readLine());
-				System.out.println("Ingrese su aeropuerto de destino");
-				destino = new String(entrada.readLine());
-				System.out.println("Ingrese la aerolinea en la que desea viajar");
-				aerolinea = new String(entrada.readLine());
-			} catch (Exception exc) {
-				System.out.println(exc);
-			}
-
-			for (String s : g.servicioUno(origen, destino, aerolinea)) {
-				salida.add(s);
-			}
-			System.out.println(salida);
-			CSVWrite(salida);
-			break;
-		}
-		case 4: {
-			int contadorEscalas = 0;
-			Float distanciaTotal = (float) 0.0;
-			String origen = null;
-			String destino = null;
-			String aerolinea = null;
-			try {
-				BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-				System.out.println("Ingrese su aeropuerto de origen");
-				origen = new String(entrada.readLine());
-				System.out.println("Ingrese su aeropuerto de destino");
-				destino = new String(entrada.readLine());
-				System.out.println("Ingrese la aerolinea que quiere evitar");
-				aerolinea = new String(entrada.readLine());
-			} catch (Exception exc) {
-				System.out.println(exc);
-			}
-
-			ArrayList<String> rutas = new ArrayList<String>();
-			for (List<Ruta> listaRutas : g.servicioDos(origen, destino, aerolinea)) {
-				for (Ruta r : listaRutas) {
-					distanciaTotal = distanciaTotal + r.getDistancia();
-					contadorEscalas++;
-					rutas.add("Origen " + r.getOrigen() + " destino " + r.getDestino() + " aerolineas "
-							+ r.getAerolineas());
-				}
-				rutas.add("Distancia total de la ruta: " + distanciaTotal + " Cantidad de escalas: " + contadorEscalas);
-				contadorEscalas = 0;
-				distanciaTotal = (float) 0.0;
-			}
-			for (String s : rutas) {
-				System.out.println(s);
-			}
-			CSVWrite(rutas);
-			break;
-
-		}
-		case 5: {
-			salida.clear();
-			String paisOrigen = null;
-			String paisDestino = null;
-			try {
-				BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-				System.out.println("Ingrese su pais de origen");
-				paisOrigen = new String(entrada.readLine());
-				System.out.println("Ingrese su pais de destino");
-				paisDestino = new String(entrada.readLine());
-			} catch (Exception exc) {
-				System.out.println(exc);
-			}
-			for (String s : g.servicioTres(paisOrigen, paisDestino)) {
-				salida.add(s);
-			}
-			System.out.println(salida);
-			CSVWrite(salida);
-		}
-		}
+//		mostrarMenu();
+//		int opcion = (pedirNumero());
+//
+//		switch (opcion) {
+//		case 1: {
+//			System.out.println(g.getVertices());
+//			break;
+//		}
+//		case 2: {
+//			salida.clear();
+//			for (Ruta r : g.listarReservas()) {
+//				for (String a : r.getAerolineas().keySet()) {
+//					if (r.getAerolineas().get(a).getAsientosReservados() > 0) {
+//						String datosSalida = new String("Desde " + r.getOrigen() + " hasta " + r.getDestino() + " hay "
+//								+ r.getAerolineas().get(a).getAsientosReservados() + " asientos reservados");
+//						salida.add(datosSalida);
+//						System.out.println(datosSalida);
+//					}
+//				}
+//			}
+//			CSVWrite(salida);
+//			break;
+//		}
+//		case 3: {
+//			salida.clear();
+//			String origen = null;
+//			String destino = null;
+//			String aerolinea = null;
+//			try {
+//				BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+//				System.out.println("Ingrese su aeropuerto de origen");
+//				origen = new String(entrada.readLine());
+//				System.out.println("Ingrese su aeropuerto de destino");
+//				destino = new String(entrada.readLine());
+//				System.out.println("Ingrese la aerolinea en la que desea viajar");
+//				aerolinea = new String(entrada.readLine());
+//			} catch (Exception exc) {
+//				System.out.println(exc);
+//			}
+//
+//			for (String s : g.servicioUno(origen, destino, aerolinea)) {
+//				salida.add(s);
+//			}
+//			System.out.println(salida);
+//			CSVWrite(salida);
+//			break;
+//		}
+//		case 4: {
+//			int contadorEscalas = 0;
+//			Float distanciaTotal = (float) 0.0;
+//			String origen = null;
+//			String destino = null;
+//			String aerolinea = null;
+//			try {
+//				BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+//				System.out.println("Ingrese su aeropuerto de origen");
+//				origen = new String(entrada.readLine());
+//				System.out.println("Ingrese su aeropuerto de destino");
+//				destino = new String(entrada.readLine());
+//				System.out.println("Ingrese la aerolinea que quiere evitar");
+//				aerolinea = new String(entrada.readLine());
+//			} catch (Exception exc) {
+//				System.out.println(exc);
+//			}
+//
+//			ArrayList<String> rutas = new ArrayList<String>();
+//			for (List<Ruta> listaRutas : g.servicioDos(origen, destino, aerolinea)) {
+//				for (Ruta r : listaRutas) {
+//					distanciaTotal = distanciaTotal + r.getDistancia();
+//					contadorEscalas++;
+//					rutas.add("Origen " + r.getOrigen() + " destino " + r.getDestino() + " aerolineas "
+//							+ r.getAerolineas());
+//				}
+//				rutas.add("Distancia total de la ruta: " + distanciaTotal + " Cantidad de escalas: " + contadorEscalas);
+//				contadorEscalas = 0;
+//				distanciaTotal = (float) 0.0;
+//			}
+//			for (String s : rutas) {
+//				System.out.println(s);
+//			}
+//			CSVWrite(rutas);
+//			break;
+//
+//		}
+//		case 5: {
+//			salida.clear();
+//			String paisOrigen = null;
+//			String paisDestino = null;
+//			try {
+//				BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+//				System.out.println("Ingrese su pais de origen");
+//				paisOrigen = new String(entrada.readLine());
+//				System.out.println("Ingrese su pais de destino");
+//				paisDestino = new String(entrada.readLine());
+//			} catch (Exception exc) {
+//				System.out.println(exc);
+//			}
+//			for (String s : g.servicioTres(paisOrigen, paisDestino)) {
+//				salida.add(s);
+//			}
+//			System.out.println(salida);
+//			CSVWrite(salida);
+//		}
+//		}
 	}
 
 }
