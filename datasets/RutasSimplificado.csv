@@ -1,5 +1,19 @@
-Jorge Newbery;Ministro Pistarini;8535.74;0;{United Airlines-96,Delta-152,LATAM-210,Aerolineas-276,Avianca-250}
-Jorge Newbery;Comodoro Benitez;8516;0;{United Airlines-96,Delta-152,LATAM-210,Aerolineas-276}
-Ministro Pistarini;Comodoro Benitez;2054.86;1;{Aerolineas-120}
-Comodoro Benitez;Pucon;10492.25;0;{Aerolineas-120,LATAM-200}
-Pucon;Jorge Newbery;1291.71;0;{United Airlines-120}
+Jorge Newbery;Ministro Pistarini;8535.74;0;{United Airlines-96,Delta-152,LATAM-210,Aerolineas-276,Avianca-250};
+Jorge Newbery;Comodoro Benitez;8516;0;{United Airlines-96,Delta-152,LATAM-210,Aerolineas-276};
+Ministro Pistarini;Comodoro Benitez;2054.86;1;{Aerolineas-120};
+Comodoro Benitez;Pucon;10492.25;0;{Aerolineas-120,LATAM-200};
+Pucon;Jorge Newbery;1291.71;0;{United Airlines-120};
+Pucon;El prat;8535.74;0;{United Airlines-96,Delta-152,LATAM-210,Aerolineas-276,Avianca-250};
+El prat;Ministro Pistarini;8516;0;{United Airlines-96,Delta-152,LATAM-210,Aerolineas-276};
+Comodoro Benitez;John F. Kennedy;2054.86;0;{Aerolineas-120};
+Pucon;John F. Kennedy;10492.25;0;{Aerolineas-120,LATAM-200};
+El prat;Ministro Pistarini;8535.74;0;{United Airlines-96,Delta-152,LATAM-210,Aerolineas-276,Avianca-250};
+El prat;John F. Kennedy;1291.71;0;{United Airlines-120};
+John F. Kennedy;Tocumen;8535.74;0;{United Airlines-96,Delta-152,LATAM-210,Aerolineas-276,Avianca-250};
+Tocumen;Campinas;8516;0;{United Airlines-96,Delta-152,LATAM-210,Aerolineas-276};
+Campinas;El prat;2054.86;0;{Aerolineas-120};
+Campinas;Comodoro Benitez;10492.25;0;{Aerolineas-120,LATAM-200};
+Campinas;Logan;1291.71;0;{United Airlines-120};
+Logan;Jorge Chavez;8516;0;{United Airlines-96,Delta-152,LATAM-210,Aerolineas-276,Avianca-250};
+Tocumen;Jorge Chavez;8535.74;0;{United Airlines-96,Delta-152,LATAM-210,Aerolineas-276};
+Tocumen;El prat;10492.25;0;{Aerolineas-120,LATAM-200};

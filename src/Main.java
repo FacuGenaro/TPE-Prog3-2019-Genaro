@@ -154,13 +154,15 @@ public class Main {
 		parseCSVRutas(g, "C:\\Users\\facun\\Desktop\\TPE-Prog3-2019-Genaro\\datasets\\RutasSimplificado.csv");
 		parseCSVReservas(g, "C:\\Users\\facun\\Desktop\\TPE-Prog3-2019-Genaro\\datasets\\Reservas.csv");
 		
-		g.recorridoBacktracking("Ministro Pistarini");
-		System.out.println("------------");
-		g.recorridoBacktracking("Pucon");
-		System.out.println("------------");
-		g.recorridoBacktracking("Comodoro Benitez");
-		System.out.println("------------");
-		g.recorridoBacktracking("Jorge Newbery");
+		
+		
+		System.out.println(g.recorridoBacktracking("Ministro Pistarini").size());
+//		for (List<Ruta> r : g.recorridoBacktracking("Ministro Pistarini")) {
+//			for (Ruta re : r) {
+//				System.out.println(re);
+//			}
+//		}
+		
 
 //		mostrarMenu();
 //		int opcion = (pedirNumero());

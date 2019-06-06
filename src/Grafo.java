@@ -137,35 +137,51 @@ public class Grafo {
 	}
 
 	// Problema del viajante Backtracking
-	public void recorridoBacktracking(String origen) {
+	public List<List<Ruta>> recorridoBacktracking(String origen) {
 		List<Aeropuerto> visitados = new ArrayList<>();
+		List<List<Ruta>> rutas = new ArrayList<>();
+		Float distanciaTemporal = (float) 0;
+		Float mejorDistancia = (float) Integer.MAX_VALUE;
 		for (Aeropuerto a : this.vertices) {
 			if (a.getNombre().equals(origen)) {
-				List<List<Ruta>> rutas = DFS_Visitar(a, visitados, new ArrayList<List<Ruta>>());
-				System.out.println(rutas);
+				rutas = DFS_Visitar(a, visitados, new ArrayList<List<Ruta>>(), mejorDistancia, distanciaTemporal);
 			}
 		}
+		return rutas;
 	}
 
-	private List<List<Ruta>> DFS_Visitar(Aeropuerto ab, List<Aeropuerto> visitados, List<List<Ruta>> rutas) {
+	private List<List<Ruta>> DFS_Visitar(Aeropuerto ab, List<Aeropuerto> visitados, List<List<Ruta>> rutas,
+			Float mejorDistancia, Float distanciaTemporal) {
 		List<Ruta> rutasActuales = new ArrayList<Ruta>();
 		Aeropuerto origen = ab;
-		DFS_Visitar(ab, visitados, origen, rutas, rutasActuales);
+		DFS_Visitar(ab, visitados, origen, rutas, rutasActuales, mejorDistancia, distanciaTemporal);
 		return rutas;
 	}
 
 	private void DFS_Visitar(Aeropuerto ab, List<Aeropuerto> visitados, Aeropuerto origen, List<List<Ruta>> rutas,
-			List<Ruta> rutasActuales) {
+			List<Ruta> rutasActuales, Float mejorDistancia, Float distanciaTemporal) {
+
 		if (ab.getNombre().equals(origen.getNombre()) && visitados.containsAll(this.vertices)) {
-			rutas.add(new ArrayList<Ruta>(rutasActuales));
+			if (distanciaTemporal < mejorDistancia) {
+//				rutas.clear();
+				mejorDistancia = distanciaTemporal;
+				distanciaTemporal = (float) 0;
+				rutas.add(new ArrayList<Ruta>(rutasActuales));
+			}
 			return;
 		}
 		if (!visitados.contains(ab)) {
 			visitados.add(ab);
 			for (Ruta r : ab.getRutas()) {
-				rutasActuales.add(r);
-				DFS_Visitar(r.getDestino(), visitados, origen, rutas, rutasActuales);
-				rutasActuales.remove(r);
+				distanciaTemporal += r.getDistancia();
+				if (distanciaTemporal < mejorDistancia) {
+					rutasActuales.add(r);
+					DFS_Visitar(r.getDestino(), visitados, origen, rutas, rutasActuales, mejorDistancia,
+							distanciaTemporal);
+					rutasActuales.remove(r);
+				} else {
+					rutasActuales.clear();
+				}
 			}
 			visitados.remove(ab);
 		}
