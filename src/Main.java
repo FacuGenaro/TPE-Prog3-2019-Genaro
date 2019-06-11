@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class Main {
 					}
 				}
 				Ruta r = new Ruta();
-				Float distancia = new Float(Float.valueOf(items[2]));
+				BigDecimal distancia = new BigDecimal(items[2]);
 				boolean cabotaje = items[3].equals("1");
 				r.setDistancia(distancia);
 				r.setCabotaje(cabotaje);
@@ -156,12 +157,16 @@ public class Main {
 		
 		
 		
-		System.out.println(g.recorridoBacktracking("Ministro Pistarini").size());
-//		for (List<Ruta> r : g.recorridoBacktracking("Ministro Pistarini")) {
-//			for (Ruta re : r) {
-//				System.out.println(re);
-//			}
-//		}
+		List<List<Ruta>> ciclos = g.recorridoBacktracking("Ministro Pistarini");
+
+		for (List<Ruta> ciclo : ciclos) {
+			BigDecimal distancia = BigDecimal.ZERO;
+			for (Ruta ruta : ciclo) {
+				distancia = distancia.add(ruta.getDistancia());
+			}
+			System.out.println("\n OTRA RUTA");
+			System.out.println(distancia);
+		}
 		
 
 //		mostrarMenu();

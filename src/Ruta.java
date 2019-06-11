@@ -1,7 +1,8 @@
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 public class Ruta {
-	private Float distancia;
+	private BigDecimal distancia;
 	private boolean cabotaje;
 	private Aeropuerto origen;
 	private Aeropuerto destino;
@@ -13,7 +14,7 @@ public class Ruta {
 		this.aerolineas = new HashMap<>();
 	}
 
-	public Ruta(Float distancia, boolean cabotaje, Aeropuerto origen, Aeropuerto destino) {
+	public Ruta(BigDecimal distancia, boolean cabotaje, Aeropuerto origen, Aeropuerto destino) {
 		this.distancia = distancia;
 		this.cabotaje = cabotaje;
 		this.origen = origen;
@@ -29,11 +30,11 @@ public class Ruta {
 		this.aerolineas.put(k, a);
 	}
 
-	public Float getDistancia() {
+	public BigDecimal getDistancia() {
 		return distancia;
 	}
 
-	public void setDistancia(Float distancia) {
+	public void setDistancia(BigDecimal distancia) {
 		this.distancia = distancia;
 	}
 

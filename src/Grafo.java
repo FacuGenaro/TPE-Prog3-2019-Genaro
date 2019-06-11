@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -5,6 +6,9 @@ import java.util.Map;
 
 public class Grafo {
 	protected ArrayList<Aeropuerto> vertices;
+	private CondicionPoda poda;
+	private BigDecimal distanciaActual = BigDecimal.ZERO;
+	private BigDecimal mejorDistancia = BigDecimal.valueOf(Double.MAX_VALUE);
 
 	public Grafo() {
 		this.vertices = new ArrayList<>();
@@ -28,6 +32,10 @@ public class Grafo {
 			}
 		}
 		return aDevolver;
+	}
+
+	public void setCondicionPoda(CondicionPoda c) {
+		this.poda = c;
 	}
 
 	// Verificar si existe un vuelo directo (es decir, sin escalas) entre un
@@ -140,51 +148,43 @@ public class Grafo {
 	public List<List<Ruta>> recorridoBacktracking(String origen) {
 		List<Aeropuerto> visitados = new ArrayList<>();
 		List<List<Ruta>> rutas = new ArrayList<>();
-		Float distanciaTemporal = (float) 0;
-		Float mejorDistancia = (float) Integer.MAX_VALUE;
+		this.poda = new CondicionMejorDistancia();
 		for (Aeropuerto a : this.vertices) {
 			if (a.getNombre().equals(origen)) {
-				rutas = DFS_Visitar(a, visitados, new ArrayList<List<Ruta>>(), mejorDistancia, distanciaTemporal);
+				rutas = DFS_Visitar(a, visitados, new ArrayList<List<Ruta>>());
 			}
 		}
 		return rutas;
 	}
 
-	private List<List<Ruta>> DFS_Visitar(Aeropuerto ab, List<Aeropuerto> visitados, List<List<Ruta>> rutas,
-			Float mejorDistancia, Float distanciaTemporal) {
+	private List<List<Ruta>> DFS_Visitar(Aeropuerto ab, List<Aeropuerto> visitados, List<List<Ruta>> rutas) {
 		List<Ruta> rutasActuales = new ArrayList<Ruta>();
 		Aeropuerto origen = ab;
-		DFS_Visitar(ab, visitados, origen, rutas, rutasActuales, mejorDistancia, distanciaTemporal);
+		DFS_Visitar(ab, visitados, origen, rutas, rutasActuales);
 		return rutas;
 	}
 
 	private void DFS_Visitar(Aeropuerto ab, List<Aeropuerto> visitados, Aeropuerto origen, List<List<Ruta>> rutas,
-			List<Ruta> rutasActuales, Float mejorDistancia, Float distanciaTemporal) {
+			List<Ruta> rutasActuales) {
 
-		if (ab.getNombre().equals(origen.getNombre()) && visitados.containsAll(this.vertices)) {
-			if (distanciaTemporal < mejorDistancia) {
-//				rutas.clear();
-				mejorDistancia = distanciaTemporal;
-				distanciaTemporal = (float) 0;
+		if (poda.hacerPoda(distanciaActual, mejorDistancia) == -1) {
+			if (ab.getNombre().equals(origen.getNombre()) && visitados.containsAll(this.vertices)) {
+				rutas.clear();
+				mejorDistancia = distanciaActual;
 				rutas.add(new ArrayList<Ruta>(rutasActuales));
+				return;
 			}
-			return;
-		}
-		if (!visitados.contains(ab)) {
-			visitados.add(ab);
-			for (Ruta r : ab.getRutas()) {
-				distanciaTemporal += r.getDistancia();
-				if (distanciaTemporal < mejorDistancia) {
+			if (!visitados.contains(ab)) {
+				visitados.add(ab);
+				for (Ruta r : ab.getRutas()) {
 					rutasActuales.add(r);
-					DFS_Visitar(r.getDestino(), visitados, origen, rutas, rutasActuales, mejorDistancia,
-							distanciaTemporal);
+					distanciaActual = distanciaActual.add(r.getDistancia());
+					DFS_Visitar(r.getDestino(), visitados, origen, rutas, rutasActuales);
+					distanciaActual = distanciaActual.subtract(r.getDistancia());
 					rutasActuales.remove(r);
-				} else {
-					rutasActuales.clear();
 				}
+				visitados.remove(ab);
 			}
-			visitados.remove(ab);
 		}
 	}
-
 }
