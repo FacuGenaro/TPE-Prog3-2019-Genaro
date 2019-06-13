@@ -1,8 +1,12 @@
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Grafo {
 	protected ArrayList<Aeropuerto> vertices;
@@ -16,6 +20,15 @@ public class Grafo {
 
 	public ArrayList<Aeropuerto> getVertices() {
 		return new ArrayList<Aeropuerto>(vertices);
+	}
+
+	public Aeropuerto getVertice(String v) {
+		for (Aeropuerto a : this.vertices) {
+			if (a.equals(v)) {
+				return a;
+			}
+		}
+		return null;
 	}
 
 	public void addVertice(Aeropuerto v) {
@@ -186,5 +199,62 @@ public class Grafo {
 				visitados.remove(ab);
 			}
 		}
+	}
+
+	// Problema del viajante Greedy
+
+	public List<Aeropuerto> greedy(String origen) {
+		List<Aeropuerto> queue = new ArrayList<>(this.vertices);
+		List<Aeropuerto> aDevolver = new ArrayList<>();
+
+		aDevolver.add(this.getVertice(origen));
+		Aeropuerto aeropuertoOrigen = this.getVertice(origen);
+		Aeropuerto padre = aeropuertoOrigen;
+
+		queue.remove(aeropuertoOrigen);
+		while (!queue.isEmpty() && !this.isSolucion(aDevolver)) {
+			System.out.println(padre);
+			Aeropuerto ae = this.seleccionarMejorCamino(queue, padre, aDevolver);
+			padre = ae;
+			if (this.isFactible(ae, queue)) {
+				if (!aDevolver.contains(ae)) {
+					aDevolver.add(ae);
+					queue.remove(ae);
+				}
+			} else {
+				System.out.println("Camino sin salida");
+				return aDevolver;
+			}
+		}
+		return aDevolver;
+	}
+
+	private Aeropuerto seleccionarMejorCamino(List<Aeropuerto> queue, Aeropuerto a, List<Aeropuerto> aDevolver) {
+		BigDecimal mejorDistancia = BigDecimal.valueOf(Double.MAX_VALUE);
+		Aeropuerto aeropuerto = null;
+		for (Ruta r : a.getRutas()) {
+			if ((queue.contains(r.getDestino()) && (!aDevolver.contains(r.getDestino())))) {
+				if (r.getDistancia().compareTo(mejorDistancia) == -1) {
+					mejorDistancia = r.getDistancia();
+					aeropuerto = r.getDestino();
+				}
+			}
+		}
+		return aeropuerto;
+	}
+
+	private Boolean isSolucion(List<Aeropuerto> a) {
+		return (a.containsAll(this.vertices));
+	}
+
+	private Boolean isFactible(Aeropuerto a, List<Aeropuerto> queue) {
+		if (a != null) {
+			for (Ruta r : a.getRutas()) {
+				if (queue.contains(r.getDestino())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

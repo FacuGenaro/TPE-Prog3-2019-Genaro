@@ -157,16 +157,19 @@ public class Main {
 		
 		
 		
-		List<List<Ruta>> ciclos = g.recorridoBacktracking("Ministro Pistarini");
-
-		for (List<Ruta> ciclo : ciclos) {
-			BigDecimal distancia = BigDecimal.ZERO;
-			for (Ruta ruta : ciclo) {
-				distancia = distancia.add(ruta.getDistancia());
-			}
-			System.out.println("\n OTRA RUTA");
-			System.out.println(distancia);
-		}
+//		List<List<Ruta>> ciclos = g.recorridoBacktracking("Ministro Pistarini");
+//
+//		for (List<Ruta> ciclo : ciclos) {
+//			BigDecimal distancia = BigDecimal.ZERO;
+//			for (Ruta ruta : ciclo) {
+//				distancia = distancia.add(ruta.getDistancia());
+//			}
+//			System.out.println("\n OTRA RUTA");
+//			System.out.println(ciclo);
+//			System.out.println(distancia);
+//		}
+		
+		System.out.println(g.greedy("Ministro Pistarini"));
 		
 
 //		mostrarMenu();
