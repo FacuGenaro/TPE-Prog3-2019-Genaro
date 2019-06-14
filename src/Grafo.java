@@ -12,6 +12,7 @@ public class Grafo {
 	private BigDecimal mejorDistancia = BigDecimal.valueOf(Double.MAX_VALUE);
 	private int contadorRecursion = 0; // Las uso para las salidas por pantalla
 	private int contadorPodaCumplida = 0;
+	private int contadorVueltaAtras = 0;
 
 	public Grafo() {
 		this.vertices = new ArrayList<>();
@@ -186,11 +187,12 @@ public class Grafo {
 				rutas.clear();
 				mejorDistancia = distanciaActual;
 				System.out.println("Ahora la mejor distancia es: " + mejorDistancia);
-				System.out.println("Se entró recursivamente " + this.contadorRecursion + " veces y la condición de poda se cumplió "
-						+ this.contadorPodaCumplida + " veces");
+				System.out.println("Se entró recursivamente " + this.contadorRecursion
+						+ " veces y la condición de poda se cumplió " + this.contadorPodaCumplida + " veces y se volvió atrás " + this.contadorVueltaAtras + " veces");
 				System.out.println("---------------------- fin de ciclo ---------------");
 				this.contadorRecursion = 0;
 				this.contadorPodaCumplida = 0;
+				this.contadorVueltaAtras = 0;
 				rutas.add(new ArrayList<Ruta>(rutasActuales));
 				return;
 			}
@@ -206,6 +208,7 @@ public class Grafo {
 				visitados.remove(ab);
 			}
 		}
+		this.contadorVueltaAtras ++;
 		return;
 	}
 
@@ -247,6 +250,13 @@ public class Grafo {
 			if (this.isFactible(ae, queue)) {
 				aDevolver.add(ae);
 				queue.remove(ae);
+			} else if (queue.isEmpty()) {
+				for (Ruta r : ae.getRutas()) {
+					if (r.getDestino().equals(aeropuertoOrigen)) {
+						aDevolver.add(r.getDestino());
+						return aDevolver;
+					}
+				}
 			} else {
 				aDevolver.add(ae);
 				return aDevolver;
@@ -284,7 +294,8 @@ public class Grafo {
 				return true;
 			}
 		}
-		System.out.println("La solucion encontrada no es factible ya que el aeropuerto " + a +" no posee rutas con destinos sin visitar");
+		System.out.println("La solucion encontrada no es factible ya que el aeropuerto " + a
+				+ " no posee rutas con destinos sin visitar");
 		System.out.println("---------------------- fin de ciclo ---------------");
 		return false;
 	}
