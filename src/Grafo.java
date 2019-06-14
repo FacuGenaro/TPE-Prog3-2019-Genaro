@@ -1,18 +1,17 @@
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Grafo {
 	protected ArrayList<Aeropuerto> vertices;
 	private CondicionPoda poda;
 	private BigDecimal distanciaActual = BigDecimal.ZERO;
 	private BigDecimal mejorDistancia = BigDecimal.valueOf(Double.MAX_VALUE);
+	private int contadorRecursion = 0; // Las uso para las salidas por pantalla
+	private int contadorPodaCumplida = 0;
 
 	public Grafo() {
 		this.vertices = new ArrayList<>();
@@ -158,7 +157,7 @@ public class Grafo {
 	}
 
 	// Problema del viajante Backtracking
-	public List<List<Ruta>> recorridoBacktracking(String origen) {
+	public List<List<Ruta>> getRutasBacktracking(String origen) {
 		List<Aeropuerto> visitados = new ArrayList<>();
 		List<List<Ruta>> rutas = new ArrayList<>();
 		this.poda = new CondicionMejorDistancia();
@@ -179,11 +178,19 @@ public class Grafo {
 
 	private void DFS_Visitar(Aeropuerto ab, List<Aeropuerto> visitados, Aeropuerto origen, List<List<Ruta>> rutas,
 			List<Ruta> rutasActuales) {
-
+		this.contadorRecursion++;
 		if (poda.hacerPoda(distanciaActual, mejorDistancia) == -1) {
+			this.contadorPodaCumplida++;
 			if (ab.getNombre().equals(origen.getNombre()) && visitados.containsAll(this.vertices)) {
+				System.out.println("Se va a agregar la ruta " + rutasActuales);
 				rutas.clear();
 				mejorDistancia = distanciaActual;
+				System.out.println("Ahora la mejor distancia es: " + mejorDistancia);
+				System.out.println("Se entró recursivamente " + this.contadorRecursion + " veces y la condición de poda se cumplió "
+						+ this.contadorPodaCumplida + " veces");
+				System.out.println("---------------------- fin de ciclo ---------------");
+				this.contadorRecursion = 0;
+				this.contadorPodaCumplida = 0;
 				rutas.add(new ArrayList<Ruta>(rutasActuales));
 				return;
 			}
@@ -199,13 +206,34 @@ public class Grafo {
 				visitados.remove(ab);
 			}
 		}
+		return;
 	}
 
 	// Problema del viajante Greedy
 
+	public List<Ruta> getRutasGreedy(String origen) {
+		List<Ruta> aDevolver = new ArrayList<>();
+		List<Aeropuerto> aeropuertos = new ArrayList<>(this.greedy(origen));
+		int cont = 1;
+		for (Aeropuerto a : aeropuertos) {
+			if (cont <= aeropuertos.size() - 1) {
+				Aeropuerto siguiente = aeropuertos.get(cont);
+				for (Ruta r : a.getRutas()) {
+					if (r.getDestino().equals(siguiente)) {
+						aDevolver.add(r);
+					}
+				}
+			}
+			cont = cont + 1;
+		}
+		return aDevolver;
+	}
+
 	public List<Aeropuerto> greedy(String origen) {
 		List<Aeropuerto> queue = new ArrayList<>(this.vertices);
 		List<Aeropuerto> aDevolver = new ArrayList<>();
+
+		System.out.println("Queue inicial " + queue);
 
 		aDevolver.add(this.getVertice(origen));
 		Aeropuerto aeropuertoOrigen = this.getVertice(origen);
@@ -213,16 +241,14 @@ public class Grafo {
 
 		queue.remove(aeropuertoOrigen);
 		while (!queue.isEmpty() && !this.isSolucion(aDevolver)) {
-			System.out.println(padre);
+			System.out.println("Queue en cada ciclo: " + queue);
 			Aeropuerto ae = this.seleccionarMejorCamino(queue, padre, aDevolver);
 			padre = ae;
 			if (this.isFactible(ae, queue)) {
-				if (!aDevolver.contains(ae)) {
-					aDevolver.add(ae);
-					queue.remove(ae);
-				}
+				aDevolver.add(ae);
+				queue.remove(ae);
 			} else {
-				System.out.println("Camino sin salida");
+				aDevolver.add(ae);
 				return aDevolver;
 			}
 		}
@@ -230,6 +256,8 @@ public class Grafo {
 	}
 
 	private Aeropuerto seleccionarMejorCamino(List<Aeropuerto> queue, Aeropuerto a, List<Aeropuerto> aDevolver) {
+		System.out.println("Eligiendo el mejor camino a partir de " + a);
+		System.out.println("Posibles caminos: " + a.getRutas());
 		BigDecimal mejorDistancia = BigDecimal.valueOf(Double.MAX_VALUE);
 		Aeropuerto aeropuerto = null;
 		for (Ruta r : a.getRutas()) {
@@ -240,6 +268,7 @@ public class Grafo {
 				}
 			}
 		}
+		System.out.println("La elección fue: " + aeropuerto + " cuya distancia es: " + mejorDistancia);
 		return aeropuerto;
 	}
 
@@ -248,13 +277,15 @@ public class Grafo {
 	}
 
 	private Boolean isFactible(Aeropuerto a, List<Aeropuerto> queue) {
-		if (a != null) {
-			for (Ruta r : a.getRutas()) {
-				if (queue.contains(r.getDestino())) {
-					return true;
-				}
+		for (Ruta r : a.getRutas()) {
+			if (queue.contains(r.getDestino())) {
+				System.out.println("La solucion encontrada es factible");
+				System.out.println("---------------------- fin de ciclo ---------------");
+				return true;
 			}
 		}
+		System.out.println("La solucion encontrada no es factible ya que el aeropuerto " + a +" no posee rutas con destinos sin visitar");
+		System.out.println("---------------------- fin de ciclo ---------------");
 		return false;
 	}
 }

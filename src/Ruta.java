@@ -65,7 +65,7 @@ public class Ruta {
 	@Override
 	public String toString() {
 		String a = ("origen: " + this.origen.getNombre() + " destino: " + this.destino.getNombre() + " distancia: "
-				+ this.distancia.toString() );
+				+ this.distancia);
 		return a;
 	}
 	
