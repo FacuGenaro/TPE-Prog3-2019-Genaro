@@ -305,7 +305,8 @@ public class Main {
 
 			List<String> rutaGreedy = new ArrayList<>();
 			List<Aeropuerto> aeropuertosVisitados = new ArrayList<>(g.greedy(origen));
-
+			
+			System.out.println(g.getRutasGreedy("Pucon"));
 			for (Ruta r : g.getRutasGreedy(origen)) {
 				distanciaTotal = distanciaTotal.add(r.getDistancia());
 				rutaGreedy.add("Origen " + r.getOrigen() + " destino " + r.getDestino() + " aerolineas "

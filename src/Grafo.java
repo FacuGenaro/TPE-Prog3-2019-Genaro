@@ -247,12 +247,13 @@ public class Grafo {
 			System.out.println("Queue en cada ciclo: " + queue);
 			Aeropuerto ae = this.seleccionarMejorCamino(queue, padre, aDevolver);
 			padre = ae;
+			queue.remove(ae);
 			if (this.isFactible(ae, queue)) {
 				aDevolver.add(ae);
-				queue.remove(ae);
 			} else if (queue.isEmpty()) {
 				for (Ruta r : ae.getRutas()) {
 					if (r.getDestino().equals(aeropuertoOrigen)) {
+						aDevolver.add(ae);
 						aDevolver.add(r.getDestino());
 						return aDevolver;
 					}
