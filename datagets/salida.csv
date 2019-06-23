@@ -1,11 +1,11 @@
-Origen Ministro Pistarini destino Jorge Newbery aerolineas {United Airlines=Reservas: 0, Avianca=Reservas: 0, Aerolineas=Reservas: 0, Delta=Reservas: 0, LATAM=Reservas: 0} distancia: 8535.74
-Origen Jorge Newbery destino Pucon aerolineas {United Airlines=Reservas: 0} distancia: 1291.71
-Origen Pucon destino El prat aerolineas {United Airlines=Reservas: 0, Avianca=Reservas: 0, Aerolineas=Reservas: 0, Delta=Reservas: 0, LATAM=Reservas: 0} distancia: 8535.74
+Origen Ministro Pistarini destino Comodoro Benitez aerolineas {Aerolineas=Reservas: 0} distancia: 2054.86
+Origen Comodoro Benitez destino John F. Kennedy aerolineas {Aerolineas=Reservas: 0} distancia: 2054.86
+Origen John F. Kennedy destino El prat aerolineas {United Airlines=Reservas: 0} distancia: 1291.71
 Origen El prat destino Campinas aerolineas {Aerolineas=Reservas: 0} distancia: 2054.86
 Origen Campinas destino Logan aerolineas {United Airlines=Reservas: 0} distancia: 1291.71
 Origen Logan destino Jorge Chavez aerolineas {United Airlines=Reservas: 0, Avianca=Reservas: 0, Aerolineas=Reservas: 0, Delta=Reservas: 0, LATAM=Reservas: 0} distancia: 8516
 Origen Jorge Chavez destino Tocumen aerolineas {United Airlines=Reservas: 0, Aerolineas=Reservas: 0, Delta=Reservas: 0, LATAM=Reservas: 0} distancia: 8535.74
-Origen Tocumen destino John F. Kennedy aerolineas {United Airlines=Reservas: 0, Avianca=Reservas: 0, Aerolineas=Reservas: 0, Delta=Reservas: 0, LATAM=Reservas: 0} distancia: 8535.74
-Origen John F. Kennedy destino Comodoro Benitez aerolineas {Aerolineas=Reservas: 0} distancia: 2054.86
-Origen Comodoro Benitez destino Ministro Pistarini aerolineas {Aerolineas=Reservas: 0} distancia: 2054.86
-Distancia total de la ruta: 51406.96
+Origen Tocumen destino Pucon aerolineas {Aerolineas=Reservas: 0, LATAM=Reservas: 0} distancia: 10492.25
+Origen Pucon destino Jorge Newbery aerolineas {United Airlines=Reservas: 0} distancia: 1291.71
+Origen Jorge Newbery destino Ministro Pistarini aerolineas {United Airlines=Reservas: 0, Avianca=Reservas: 0, Aerolineas=Reservas: 0, Delta=Reservas: 0, LATAM=Reservas: 0} distancia: 8535.74
+Distancia total de la ruta: 46119.44
